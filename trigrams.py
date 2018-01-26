@@ -38,26 +38,11 @@ def new_builder(dict, n):
     prose = start.split()
     prose.append(random.choice(dict[start]))
     for i in range(1,n):
-        key1 = prose[i]
-        key2 = prose[i + 1]
-        prose.append(random.choice(dict[key1 + " " + key2]))
-    print (prose)
+        prose.append(random.choice(dict[prose[i] + " " + prose[i + 1]]))
     paragraph = ' '.join(prose)
     print(paragraph)
-        
-    # select a random starting key from list
-    # append that key's value to prose
-    # read the last two values, find that key in keys list, print value 
 
-    # print words, don't forget to use end == ""
-    # for word in prose:
-    #     print(word, end = "")
+if __name__ == '__main__':
+    main(sys.argv[1], int(sys.argv[2]))
 
-# book = book_slice('moby_dick.txt')
-# print(book)
-# print(dict_create(book))
-
-# if __name__ == '__main__':
-#     #add sys.argv to get the name of a source file from the command line. When the trigrams.py module is executed as a script ($ python trigrams.py some_text.txt 200) it should print 200 words of text to stdout.
-#     main(sys.argv)
-main('moby_dick.txt', 40)
+# main('moby_dick.txt', 200)
