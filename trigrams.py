@@ -1,11 +1,15 @@
-def main(src, numwords):
+import sys
+import io
+import random
+
+def main(src, n):
     """ """
-    book_slice(src)
-    new_builder() # how do I call this, when it takes a dictionary as an argument..? 
+    text = book_slice(src)
+    dict = dict_create(text)
+    new_builder(dict, n)
 
 def book_slice(src):
     """ Read file, and import words from file into a long list """
-    import io
 
     f = open(src, 'r', encoding='utf8')
     text = f.read()
@@ -23,13 +27,37 @@ def dict_create(text):
         if i < len(text) - 2:
             if text[i] + " " + text[i+1] not in dict:
                 dict[text[i] + " " + text[i+1]] = [text[i+2]]
-            else: #key does exist, add value to list of values:
+            else: 
                 dict[text[i] + " " + text[i+1]] = dict[text[i] + " " + text[i+1]] + [text[i+2]]
     return dict
 
-def new_builder(dict):
-    """ Create a new file with a 'story' written from the trigram """
+def new_builder(dict, n):
+    """ Create a few paragraphs (words = n) of a 'story' from the dictionary """
+    dict_keys = list(dict.keys())
+    start = random.choice(dict_keys)
+    prose = start.split()
+    prose.append(random.choice(dict[start]))
+    for i in range(1,n):
+        key1 = prose[i]
+        key2 = prose[i + 1]
+        prose.append(random.choice(dict[key1 + " " + key2]))
+    print (prose)
+    paragraph = ' '.join(prose)
+    print(paragraph)
+        
+    # select a random starting key from list
+    # append that key's value to prose
+    # read the last two values, find that key in keys list, print value 
 
-book = book_slice('moby_dick.txt')
-print(book)
-print(dict_create(book))
+    # print words, don't forget to use end == ""
+    # for word in prose:
+    #     print(word, end = "")
+
+# book = book_slice('moby_dick.txt')
+# print(book)
+# print(dict_create(book))
+
+# if __name__ == '__main__':
+#     #add sys.argv to get the name of a source file from the command line. When the trigrams.py module is executed as a script ($ python trigrams.py some_text.txt 200) it should print 200 words of text to stdout.
+#     main(sys.argv)
+main('moby_dick.txt', 40)
