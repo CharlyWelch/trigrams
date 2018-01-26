@@ -7,10 +7,14 @@ def book_slice(src):
     """ Read file, and import words from file into a long list """
     import io
 
-    f = open(src, 'r')
+    f = open(src, 'r', encoding='utf8')
     text = f.read()
     f.close()
-    return text.split()
+    strip_text = []
+    text = text.split()
+    for word in text:
+        strip_text.append(word.strip('.!()?_:-0123456789""'))
+    return strip_text
 
 def dict_create(text):
     """ Build dictionary with list of words from text """
@@ -26,6 +30,6 @@ def dict_create(text):
 def new_builder(dict):
     """ Create a new file with a 'story' written from the trigram """
 
-book = book_slice('whitman.txt')
+book = book_slice('moby_dick.txt')
 print(book)
 print(dict_create(book))
