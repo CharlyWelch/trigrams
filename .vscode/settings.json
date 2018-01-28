@@ -1,0 +1,3 @@
+{
+    "python.pythonPath": "${workspaceFolder}/trigramsenv/bin/python"
+}
